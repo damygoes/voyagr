@@ -1,5 +1,5 @@
 {
-  "name": "@repo/ui",
+  "name": "@voyagr/ui",
   "version": "0.0.0",
   "sideEffects": [
     "**/*.css"
@@ -22,9 +22,9 @@
     "react": "^19"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/tailwind-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@voyagr/eslint-config": "workspace:*",
+    "@voyagr/tailwind-config": "workspace:*",
+    "@voyagr/typescript-config": "workspace:*",
     "@types/react": "^19.1.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.25.0",

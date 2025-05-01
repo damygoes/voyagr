@@ -1,12 +1,13 @@
 {
-  "name": "@repo/tailwind-config",
+  "name": "@voyagr/tailwind-config",
   "version": "0.0.0",
   "private": true,
   "exports": {
     ".": "./tailwind.config.ts"
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*",
+    "@voyagr/typescript-config": "workspace:*",
+    "@voyagr/design": "workspace:*",
     "tailwindcss": "^3.4.17"
   }
 }
