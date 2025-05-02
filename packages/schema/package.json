@@ -1,0 +1,25 @@
+{
+  "name": "@voyagr/schema",
+  "version": "0.0.0",
+  "exports": {
+    "./authSchema": "./src/auth.schema.ts",
+    "./entrySchema": "./src/entry.schema.ts",
+    "./locationSchema": "./src/location.schema.ts",
+    "./permissionSchema": "./src/permission.schema.ts",
+    "./userSchema": "./src/user.schema.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src --max-warnings 0"
+  },
+  "devDependencies": {
+    "@voyagr/eslint-config": "workspace:*",
+    "@voyagr/types": "workspace:*",
+    "@voyagr/typescript-config": "workspace:*",
+    "eslint": "^9.25.0",
+    "typescript": "5.8.2"
+  },
+  "dependencies": {
+    "zod": "^3.24.3"
+  }
+}

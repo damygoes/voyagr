@@ -1,0 +1,28 @@
+{
+  "name": "@voyagr/types",
+  "version": "0.0.0",
+  "exports": {
+    "./user": "./src/user/User.ts",
+    "./user-permissions": "./src/user/UserPermissions.ts",
+    "./entry": "./src/entry/Entry.ts",
+    "./entry-permissions": "./src/entry/EntryPermissions.ts",
+    "./permission": "./src/permissions/Permission.ts",
+    "./permission-assignment": "./src/permissions/PermissionAssignment.ts",
+    "./permission-query": "./src/permissions/PermissionQuery.ts",
+    "./permission-type": "./src/permissions/PermissionType.ts",
+    "./resource-type": "./src/resource/ResourceType.ts",
+    "./shareable-resource": "./src/resource/ShareableResource.ts",
+    "./auth-payload": "./src/AuthPayload.ts",
+    "./location": "./src/Location.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src --max-warnings 0"
+  },
+  "devDependencies": {
+    "@voyagr/eslint-config": "workspace:*",
+    "@voyagr/typescript-config": "workspace:*",
+    "eslint": "^9.25.0",
+    "typescript": "5.8.2"
+  }
+}

@@ -1,8 +1,6 @@
 {
   "name": "@voyagr/design",
   "version": "0.0.0",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
   "exports": {
     "./colors": "./src/tokens/colors.ts",
     "./spacing": "./src/tokens/spacing.ts",
