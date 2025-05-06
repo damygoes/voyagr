@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { z } from "zod";
 
 dotenv.config({
-  path: "./.env",
+  path: "./.env.local",
 });
 
 const envSchema = z.object({
@@ -19,10 +19,12 @@ const envSchema = z.object({
       },
     ),
   AWS_REGION: z.string(),
-  COGNITO_POOL_ID: z.string(),
-  COGNITO_CLIENT_ID: z.string(),
   S3_BUCKET_NAME: z.string(),
   CORS_ORIGIN: z.string().url(),
+  // Secret used by NextAuth for session encryption
+  NEXTAUTH_SECRET: z.string(),
+  // Secret used for JWT token signing/verification
+  JWT_SECRET: z.string(),
 });
 
 // Validate process.env

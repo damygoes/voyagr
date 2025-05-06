@@ -11,8 +11,7 @@ export const userPermissionsSchema = z.record(
 export const userSchema = z.object({
   id: userIdSchema,
   email: z.string().email(),
-  createdAt: z.string().datetime(),
-  updatedAt: z.string().datetime(),
+  name: z.string().min(1),
   permissions: userPermissionsSchema,
 });
 
