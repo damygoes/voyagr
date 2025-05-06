@@ -16,13 +16,13 @@ const LoginPage = () => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
-    // Handle email/password login
-    const res = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
     try {
+      // Handle email/password login
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
       if (res?.error) {
         // Parse error message if available
         const errorMessage =
@@ -90,7 +90,9 @@ const LoginPage = () => {
 
       <div className="my-4 text-center">
         <p>Or sign in with:</p>
-        <Button onClick={handleGoogleLogin}>Google Login</Button>
+        <Button type="submit" onClick={handleGoogleLogin} disabled={isLoading}>
+          {isLoading ? "Loading..." : "Google Login"}
+        </Button>
       </div>
     </div>
   );

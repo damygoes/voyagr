@@ -24,6 +24,7 @@ const envSchema = z.object({
   S3_BUCKET_NAME: z.string(),
   CORS_ORIGIN: z.string().url(),
   NEXTAUTH_SECRET: z.string(),
+  JWT_SECRET: z.string(),
 });
 
 // Validate process.env
