@@ -6,7 +6,7 @@ export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
   email: text("email").notNull().unique(),
   name: text("name").notNull(),
-  hashedPassword: text("hashed_password"),
+  hashedPassword: text("hashed_password"), // Optional for OAuth-only users
   permissions: jsonb("permissions")
     .$type<UserPermissions>()
     .notNull()

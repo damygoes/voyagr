@@ -8,18 +8,32 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: {},
-        password: {},
+        email: { type: "email", label: "Email" },
+        password: { type: "password", label: "Password" },
       },
       async authorize(credentials) {
-        const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/auth/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(credentials),
-        });
-        const user = await res.json();
-        if (res.ok && user) return user;
-        return null;
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Email and password are required");
+        }
+        try {
+          const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(credentials),
+          });
+          const user = await res.json();
+          if (!res.ok) {
+            const errorMessage = user?.message || "Authentication failed";
+            throw new Error(errorMessage);
+          }
+          if (!user || !user.id) {
+            throw new Error("Invalid user data received from the server");
+          }
+          return user;
+        } catch (error) {
+          console.error("Authentication error:", error);
+          return null;
+        }
       },
     }),
     GoogleProvider({
@@ -42,5 +56,22 @@ export const authOptions: NextAuthOptions = {
   secret: env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  pages: {
+    signIn: "/login",
+    error: "/auth/error",
+  },
+  debug: process.env.NODE_ENV === "development",
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV !== "development",
+      },
+    },
   },
 };

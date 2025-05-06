@@ -18,10 +18,12 @@ const DashboardHome = () => {
   }
 
   return (
-    <div>
-      Welcome to your Dashboard
-      <p>Welcome, {session.user.name}!</p>
-      <p>Your ID: {session.user.id}</p>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Welcome to your Dashboard</h1>
+      <p>Welcome, {session.user?.name || "User"}!</p>
+      {session.user?.id && (
+        <p className="text-sm text-gray-500">User ID: {session.user.id}</p>
+      )}
     </div>
   );
 };

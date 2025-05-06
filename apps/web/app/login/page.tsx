@@ -10,21 +10,36 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setError(null);
+    setIsLoading(true);
     // Handle email/password login
     const res = await signIn("credentials", {
       redirect: false,
       email,
       password,
     });
-
-    if (res?.error) {
-      setError("Failed to login. Please check your credentials.");
-    } else {
-      router.push("/dashboard"); // Redirect to a page you want after login
+    try {
+      if (res?.error) {
+        // Parse error message if available
+        const errorMessage =
+          typeof res.error === "string" && res.error.length > 0
+            ? res.error
+            : "Failed to login. Please check your credentials.";
+        setError(errorMessage);
+      } else {
+        // Constants for routes
+        const DASHBOARD_ROUTE = "/dashboard";
+        router.push(DASHBOARD_ROUTE);
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 

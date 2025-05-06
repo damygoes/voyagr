@@ -12,9 +12,10 @@ declare module "next-auth" {
 
   interface User {
     id: string;
-    name?: string | null;
-    email?: string | null;
+    name: string;
+    email: string;
     image?: string | null;
+    permissions: Record<string, unknown>; // Match backend permissions type
   }
 }
 
