@@ -7,11 +7,9 @@ export const entrySchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
   location: locationSchema,
-  date: z
-    .string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: "Invalid date format",
-    }),
+  date: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "Invalid date format",
+  }),
   created_at: z
     .string()
     .refine((val) => !isNaN(Date.parse(val)), { message: "Invalid ISO date" }),

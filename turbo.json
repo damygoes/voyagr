@@ -5,7 +5,16 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "env": [
+        "NODE_ENV",
+        "PORT",
+        "DATABASE_URL",
+        "AWS_REGION",
+        "COGNITO_POOL_ID",
+        "COGNITO_CLIENT_ID",
+        "S3_BUCKET_NAME"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -15,7 +24,16 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": [
+        "NODE_ENV",
+        "PORT",
+        "DATABASE_URL",
+        "AWS_REGION",
+        "COGNITO_POOL_ID",
+        "COGNITO_CLIENT_ID",
+        "S3_BUCKET_NAME"
+      ]
     }
   }
 }
