@@ -5,6 +5,8 @@
  *     summary: Get all entries
  *     tags:
  *       - Entries
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: A list of entries

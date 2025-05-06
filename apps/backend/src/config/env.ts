@@ -23,6 +23,7 @@ const envSchema = z.object({
   COGNITO_CLIENT_ID: z.string(),
   S3_BUCKET_NAME: z.string(),
   CORS_ORIGIN: z.string().url(),
+  NEXTAUTH_SECRET: z.string(),
 });
 
 // Validate process.env
