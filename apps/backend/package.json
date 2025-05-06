@@ -12,10 +12,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@voyagr/utils": "workspace:*",
-    "@voyagr/types": "workspace:*",
     "@voyagr/schema": "workspace:*",
-    "@types/cors": "^2.8.17",
+    "@voyagr/types": "workspace:*",
+    "@voyagr/utils": "workspace:*",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -26,6 +25,7 @@
     "zod": "^3.24.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.0.0",
     "@types/node": "^22.10.2",
     "nodemon": "^3.1.9",

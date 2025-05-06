@@ -32,8 +32,6 @@ async function start() {
   app.use(logger);
   // Health Check
   app.use("/health", healthRouter);
-  // Error Handler
-  app.use(errorHandler);
 
   // Swagger
   app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -41,10 +39,16 @@ async function start() {
   // Routes
   app.use("/api/v1", v1Router);
 
+  // Error Handler
+  app.use(errorHandler);
+
   app.listen(env.PORT, () => {
     console.log(`✅ Server running on http://localhost:${env.PORT}`);
     console.log(`📘 Docs available at http://localhost:${env.PORT}/docs`);
   });
 }
 
-start();
+start().catch((error) => {
+  console.error("Failed to start server:", error);
+  process.exit(1);
+});

@@ -15,8 +15,26 @@
  *               items:
  *                 type: object
  *                 properties:
- *                   id:
- *                     type: number
+ *                   entry_id:
+ *                     type: string
+ *                     format: uuid
  *                   title:
  *                     type: string
+ *                   user_id:
+ *                     type: string
+ *                     format: uuid
+ *                   description:
+ *                     type: string
+ *                   location:
+ *                     type: object
+ *                   date:
+ *                     type: string
+ *                     format: date-time
+ *                   created_at:
+ *                     type: string
+ *                     format: date-time
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
  */
