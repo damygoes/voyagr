@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { users } from "@/db/schema";
-import { validateEmail } from '@/utils/validateEmail';
+import { validateEmail } from "@/utils/validateEmail";
 import { compare, hash } from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { SafeUser } from "../users/User.types";
@@ -57,18 +57,18 @@ export async function createUser(
 }
 
 export async function findUserByEmail(email: string) {
-   try {
+  try {
     if (!validateEmail(email)) {
-       return null;
-     }
-     return await db.query.users.findFirst({
-       where: eq(users.email, email),
-     });
-   } catch (error) {
-     console.error("Error finding user by email:", error);
-     return null; // Or return a consistent error object structure
-   }
- }
+      return null;
+    }
+    return await db.query.users.findFirst({
+      where: eq(users.email, email),
+    });
+  } catch (error) {
+    console.error("Error finding user by email:", error);
+    return null; // Or return a consistent error object structure
+  }
+}
 
 export async function verifyPassword(password: string, hashedPassword: string) {
   try {
@@ -120,8 +120,8 @@ export async function manageUserFromOAuth({
 
   if (!user) throw new Error("User creation failed");
 
- // Omit sensitive fields safely
- // eslint-disable-next-line @typescript-eslint/no-unused-vars
- const { hashedPassword, createdAt, updatedAt, ...safeUser } = user;
- return safeUser as SafeUser;
+  // Omit sensitive fields safely
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { hashedPassword, createdAt, updatedAt, ...safeUser } = user;
+  return safeUser as SafeUser;
 }

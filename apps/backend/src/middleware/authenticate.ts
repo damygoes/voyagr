@@ -31,7 +31,12 @@ export function authenticateJWT(
     }
     const decoded = jwt.verify(token, env.JWT_SECRET);
     // Validate that decoded is an object with expected user properties
-    if (typeof decoded === "object" && decoded !== null && "id" in decoded && typeof decoded.id === "string") {
+    if (
+      typeof decoded === "object" &&
+      decoded !== null &&
+      "id" in decoded &&
+      typeof decoded.id === "string"
+    ) {
       req.user = decoded as User;
     } else {
       throw new Error("Invalid token payload structure");

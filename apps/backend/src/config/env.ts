@@ -22,8 +22,10 @@ const envSchema = z.object({
   S3_BUCKET_NAME: z.string(),
   CORS_ORIGIN: z.string().url(),
   // Secret used by NextAuth for session encryption
-  NEXTAUTH_SECRET: z.string().min(32, "NEXTAUTH_SECRET must be at least 32 characters"),
-   // Secret used for JWT token signing/verification
+  NEXTAUTH_SECRET: z
+    .string()
+    .min(32, "NEXTAUTH_SECRET must be at least 32 characters"),
+  // Secret used for JWT token signing/verification
   JWT_SECRET: z.string().min(32, "JWT_SECRET must be at least 32 characters"),
 });
 

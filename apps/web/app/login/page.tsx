@@ -35,7 +35,7 @@ const LoginPage = () => {
         const DASHBOARD_ROUTE = "/dashboard";
         router.push(DASHBOARD_ROUTE);
       }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       // Log error securely (consider using a logging service)
       setError("An unexpected error occurred. Please try again.");
@@ -92,7 +92,6 @@ const LoginPage = () => {
             </button>
           </div>
         </div>
-        
       </form>
 
       <div className="my-4 text-center">

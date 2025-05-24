@@ -28,7 +28,7 @@ export async function registerUser(req: Request, res: Response) {
       id: userData.id,
       email: userData.email,
       name: userData.name,
-      permissions: userData.permissions
+      permissions: userData.permissions,
     };
     res.status(201).json(safeUser);
   } catch (error) {
@@ -56,7 +56,7 @@ export async function loginUser(req: Request, res: Response) {
       id: user.id,
       email: user.email,
       name: user.name,
-      permissions: user.permissions
+      permissions: user.permissions,
     };
 
     // Generate JWT and include in response
