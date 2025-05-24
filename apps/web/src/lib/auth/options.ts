@@ -46,7 +46,6 @@ export const authOptions: NextAuthOptions = {
       if (user?.id) {
         token.id = user.id;
       }
-      console.log("JWT callback - token after:", token);
       return token;
     },
     async session({ session, token }) {

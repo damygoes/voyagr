@@ -15,9 +15,9 @@ export async function createUser(
   password: string,
 ): Promise<CreateUserResult> {
   // Validate inputs
-  if (!email || !email.includes("@")) {
-    return { user: null, error: "Invalid email address" };
-  }
+ if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+   return { user: null, error: "Invalid email address" };
+ }
   if (!name || name.trim().length < 2) {
     return { user: null, error: "Name must be at least 2 characters" };
   }
@@ -56,18 +56,18 @@ export async function createUser(
 }
 
 export async function findUserByEmail(email: string) {
-  try {
-    if (!email || !email.includes("@")) {
-      return null;
-    }
-    return await db.query.users.findFirst({
-      where: eq(users.email, email),
-    });
-  } catch (error) {
-    console.error("Error finding user by email:", error);
-    throw error;
-  }
-}
+   try {
+     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+       return null;
+     }
+     return await db.query.users.findFirst({
+       where: eq(users.email, email),
+     });
+   } catch (error) {
+     console.error("Error finding user by email:", error);
+    return null; // Or return a consistent error object structure
+   }
+ }
 
 export async function verifyPassword(password: string, hashedPassword: string) {
   try {
@@ -119,7 +119,8 @@ export async function manageUserFromOAuth({
 
   if (!user) throw new Error("User creation failed");
 
-  // Omit sensitive fields safely
-  const safeUser: SafeUser = structuredClone(user);
-  return safeUser;
+ // Omit sensitive fields safely
+ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+ const { hashedPassword, createdAt, updatedAt, ...safeUser } = user;
+ return safeUser as SafeUser;
 }

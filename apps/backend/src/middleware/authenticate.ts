@@ -25,13 +25,13 @@ export function authenticateJWT(
   }
 
   try {
-    if (!env.NEXTAUTH_SECRET) {
-      console.error("NEXTAUTH_SECRET is not defined");
+    if (!env.JWT_SECRET) {
+      console.error("JWT_SECRET is not defined");
       return res.status(500).json({ message: "Server configuration error" });
     }
-    const decoded = jwt.verify(token, env.NEXTAUTH_SECRET);
+    const decoded = jwt.verify(token, env.JWT_SECRET);
     // Validate that decoded is an object with expected user properties
-    if (typeof decoded === "object" && decoded !== null && "id" in decoded) {
+    if (typeof decoded === "object" && decoded !== null && "id" in decoded && typeof decoded.id === "string") {
       req.user = decoded as User;
     } else {
       throw new Error("Invalid token payload structure");
