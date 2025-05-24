@@ -9,16 +9,14 @@ declare module "next-auth" {
       image?: string | null;
     };
   }
-
   interface User {
     id: string;
-    name: string;
-    email: string;
+    name?: string | null;
+    email?: string | null;
     image?: string | null;
-    permissions: Record<string, unknown>; // Match backend permissions type
+    permissions: Record<string, unknown>;
   }
 }
-
 declare module "next-auth/jwt" {
   interface JWT {
     id: string;

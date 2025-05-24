@@ -1,4 +1,5 @@
 import { env } from "@/config/env";
+import { User } from "@voyagr/types/src/user/User";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
@@ -29,7 +30,12 @@ export function authenticateJWT(
       return res.status(500).json({ message: "Server configuration error" });
     }
     const decoded = jwt.verify(token, env.NEXTAUTH_SECRET);
-    req.user = decoded;
+    // Validate that decoded is an object with expected user properties
+    if (typeof decoded === "object" && decoded !== null && "id" in decoded) {
+      req.user = decoded as User;
+    } else {
+      throw new Error("Invalid token payload structure");
+    }
     next();
   } catch (err) {
     if (err instanceof jwt.JsonWebTokenError) {

@@ -93,24 +93,29 @@ export async function manageUserFromOAuth({
     throw new Error("Email and name are required");
   }
 
-  const existing = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, email))
-    .limit(1);
+  // Use a transaction to prevent race conditions
+  const user = await db.transaction(async (tx) => {
+    const existing = await tx
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
 
-  const user =
-    existing[0] ??
-    (
-      await db
-        .insert(users)
-        .values({
-          email,
-          name,
-          permissions: {}, // default permissions
-        })
-        .returning()
-    )[0];
+    if (existing[0]) {
+      return existing[0];
+    }
+
+    const [newUser] = await tx
+      .insert(users)
+      .values({
+        email,
+        name,
+        permissions: {},
+      })
+      .returning();
+
+    return newUser;
+  });
 
   if (!user) throw new Error("User creation failed");
 

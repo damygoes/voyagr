@@ -77,20 +77,25 @@ const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-        </div>
-        <div className="flex justify-between items-center">
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
-          >
-            Log In
-          </button>
+          <div className="flex justify-between items-center">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`px-4 py-2 rounded-md text-white ${
+                isLoading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600"
+              }`}
+            >
+              {isLoading ? "Logging in..." : "Log In"}
+            </button>
+          </div>
         </div>
       </form>
 
       <div className="my-4 text-center">
         <p>Or sign in with:</p>
-        <Button type="submit" onClick={handleGoogleLogin} disabled={isLoading}>
+        <Button type="button" onClick={handleGoogleLogin} disabled={isLoading}>
           {isLoading ? "Loading..." : "Google Login"}
         </Button>
       </div>

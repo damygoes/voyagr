@@ -16,8 +16,7 @@
     "@voyagr/types": "workspace:*",
     "@voyagr/ui": "workspace:*",
     "@voyagr/utils": "workspace:*",
-    "credentials": "link:next-auth/providers/credentials",
-    "dotenv": "^16.4.7",
+
     "google": "link:next-auth/providers/google",
     "next": "^15.3.0",
     "next-auth": "^4.24.11",
