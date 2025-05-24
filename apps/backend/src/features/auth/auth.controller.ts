@@ -15,19 +15,6 @@ export async function registerUser(req: Request, res: Response) {
   if (!email || !name || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
-
-  // Email format validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    return res.status(400).json({ message: "Invalid email format" });
-  }
-
-  // Password strength validation
-  if (password.length < 8) {
-    return res
-      .status(400)
-      .json({ message: "Password must be at least 8 characters long" });
-  }
   try {
     const user = await createUser(email, name, password);
     // Omit sensitive data like hashedPassword
@@ -41,7 +28,7 @@ export async function registerUser(req: Request, res: Response) {
       id: userData.id,
       email: userData.email,
       name: userData.name,
-      permissions: userData.permissions,
+      permissions: userData.permissions
     };
     res.status(201).json(safeUser);
   } catch (error) {
@@ -69,7 +56,7 @@ export async function loginUser(req: Request, res: Response) {
       id: user.id,
       email: user.email,
       name: user.name,
-      permissions: user.permissions,
+      permissions: user.permissions
     };
 
     // Generate JWT and include in response

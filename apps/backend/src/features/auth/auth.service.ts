@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import { users } from "@/db/schema";
+import { validateEmail } from '@/utils/validateEmail';
 import { compare, hash } from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { SafeUser } from "../users/User.types";
@@ -15,9 +16,9 @@ export async function createUser(
   password: string,
 ): Promise<CreateUserResult> {
   // Validate inputs
- if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-   return { user: null, error: "Invalid email address" };
- }
+  if (!email || !email.includes("@")) {
+    return { user: null, error: "Invalid email address" };
+  }
   if (!name || name.trim().length < 2) {
     return { user: null, error: "Name must be at least 2 characters" };
   }
@@ -57,7 +58,7 @@ export async function createUser(
 
 export async function findUserByEmail(email: string) {
    try {
-     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!validateEmail(email)) {
        return null;
      }
      return await db.query.users.findFirst({
@@ -65,7 +66,7 @@ export async function findUserByEmail(email: string) {
      });
    } catch (error) {
      console.error("Error finding user by email:", error);
-    return null; // Or return a consistent error object structure
+     return null; // Or return a consistent error object structure
    }
  }
 

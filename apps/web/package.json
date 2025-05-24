@@ -16,8 +16,6 @@
     "@voyagr/types": "workspace:*",
     "@voyagr/ui": "workspace:*",
     "@voyagr/utils": "workspace:*",
-
-    "google": "link:next-auth/providers/google",
     "next": "^15.3.0",
     "next-auth": "^4.24.11",
     "react": "^19.1.0",

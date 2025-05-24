@@ -61,11 +61,9 @@ const LoginPage = () => {
             id="email"
             type="email"
             required
-            autoComplete="email"
             className="w-full p-2 border border-gray-300 rounded-md"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            disabled={isLoading}
           />
         </div>
         <div>
@@ -76,12 +74,9 @@ const LoginPage = () => {
             id="password"
             type="password"
             required
-            autoComplete="current-password"
-            minLength={8}
             className="w-full p-2 border border-gray-300 rounded-md"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            disabled={isLoading}
           />
           <div className="flex justify-between items-center">
             <button
@@ -97,6 +92,7 @@ const LoginPage = () => {
             </button>
           </div>
         </div>
+        
       </form>
 
       <div className="my-4 text-center">
