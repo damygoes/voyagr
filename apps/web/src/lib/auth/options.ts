@@ -43,14 +43,52 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.id = user.id;
+      if (user?.id) {
+        token.id = user.id;
+      }
+      console.log("JWT callback - token after:", token);
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
+      if (session.user && token?.id) {
         session.user.id = token.id;
       }
       return session;
+    },
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        try {
+          const res = await fetch(
+            `${env.NEXT_PUBLIC_API_URL}/auth/upsert-oauth-user`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                email: user.email,
+                name: user.name ?? "",
+              }),
+            },
+          );
+
+          if (!res.ok) {
+            console.error("Failed to upsert OAuth user");
+            return false;
+          }
+
+          const dbUser = await res.json();
+          if (!dbUser?.id) {
+            console.error("Invalid user returned from backend");
+            return false;
+          }
+
+          user.id = dbUser.id; // ✅ Pass to JWT
+        } catch (error) {
+          console.error("Error in OAuth sign-in flow:", error);
+          return false;
+        }
+      }
+
+      return true;
     },
   },
   secret: env.NEXTAUTH_SECRET,
@@ -65,12 +103,15 @@ export const authOptions: NextAuthOptions = {
   debug: process.env.NODE_ENV === "development",
   cookies: {
     sessionToken: {
-      name: `__Secure-next-auth.session-token`,
+      name:
+        process.env.NODE_ENV === "development"
+          ? "next-auth.session-token"
+          : "__Secure-next-auth.session-token",
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: process.env.NODE_ENV !== "development",
+        secure: process.env.NODE_ENV !== "development", // ✅ Only secure in prod
       },
     },
   },

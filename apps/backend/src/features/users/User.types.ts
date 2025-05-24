@@ -5,3 +5,8 @@ export interface UserWithPassword extends User {
   createdAt: string;
   updatedAt: string;
 }
+
+export type SafeUser = Omit<
+  UserWithPassword,
+  "hashedPassword" | "createdAt" | "updatedAt"
+>;

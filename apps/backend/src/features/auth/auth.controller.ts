@@ -1,7 +1,13 @@
 import { env } from "@/config/env";
 import { Request, Response } from "express";
 import jwt, { SignOptions } from "jsonwebtoken";
-import { createUser, findUserByEmail, verifyPassword } from "./auth.service";
+import { SafeUser } from "../users/User.types";
+import {
+  createUser,
+  findUserByEmail,
+  manageUserFromOAuth,
+  verifyPassword,
+} from "./auth.service";
 
 export async function registerUser(req: Request, res: Response) {
   const { email, name, password } = req.body;
@@ -18,7 +24,7 @@ export async function registerUser(req: Request, res: Response) {
         .status(400)
         .json({ message: user.error || "User creation failed" });
     }
-    const { ...safeUser } = userData;
+    const safeUser: SafeUser = structuredClone(userData);
     res.status(201).json(safeUser);
   } catch (error) {
     console.error("Registration error:", error);
@@ -41,7 +47,7 @@ export async function loginUser(req: Request, res: Response) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     // Remove sensitive data and return user with token
-    const { ...safeUser } = user;
+    const safeUser: SafeUser = structuredClone(user);
 
     // Generate JWT and include in response
     const signOptions: SignOptions = {
@@ -53,5 +59,21 @@ export async function loginUser(req: Request, res: Response) {
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "An error occurred during login" });
+  }
+}
+
+export async function upsertOAuthUserHandler(req: Request, res: Response) {
+  try {
+    const { email, name } = req.body;
+
+    if (!email || !name) {
+      return res.status(400).json({ message: "Email and name are required" });
+    }
+
+    const safeUser = await manageUserFromOAuth({ email, name });
+    return res.status(200).json(safeUser);
+  } catch (err) {
+    console.error("OAuth user upsert error:", err);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 }

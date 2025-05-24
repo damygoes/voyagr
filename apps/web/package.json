@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@voyagr/web",
   "version": "1.0.0",
   "type": "module",
   "private": true,
@@ -11,22 +11,28 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@voyagr/backend": "workspace:*",
+    "@voyagr/schema": "workspace:*",
+    "@voyagr/types": "workspace:*",
     "@voyagr/ui": "workspace:*",
     "@voyagr/utils": "workspace:*",
-    "@voyagr/types": "workspace:*",
-    "@voyagr/schema": "workspace:*",
+    "credentials": "link:next-auth/providers/credentials",
+    "dotenv": "^16.4.7",
+    "google": "link:next-auth/providers/google",
     "next": "^15.3.0",
+    "next-auth": "^4.24.11",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.3.0",
-    "@voyagr/eslint-config": "workspace:*",
-    "@voyagr/tailwind-config": "workspace:*",
-    "@voyagr/typescript-config": "workspace:*",
     "@types/node": "^22.15.3",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.1",
+    "@voyagr/eslint-config": "workspace:*",
+    "@voyagr/tailwind-config": "workspace:*",
+    "@voyagr/typescript-config": "workspace:*",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.25.0",
     "postcss": "^8.5.3",

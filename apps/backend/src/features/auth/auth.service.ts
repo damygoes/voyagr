@@ -2,11 +2,13 @@ import { db } from "@/db";
 import { users } from "@/db/schema";
 import { compare, hash } from "bcryptjs";
 import { eq } from "drizzle-orm";
+import { SafeUser } from "../users/User.types";
 
 export interface CreateUserResult {
   user: typeof users.$inferSelect | null;
   error?: string;
 }
+
 export async function createUser(
   email: string,
   name: string,
@@ -78,4 +80,41 @@ export async function verifyPassword(password: string, hashedPassword: string) {
     console.error("Error verifying password:", error);
     return false; // Fail securely
   }
+}
+
+export async function manageUserFromOAuth({
+  email,
+  name,
+}: {
+  email: string;
+  name: string;
+}): Promise<SafeUser> {
+  if (!email || !name) {
+    throw new Error("Email and name are required");
+  }
+
+  const existing = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+
+  const user =
+    existing[0] ??
+    (
+      await db
+        .insert(users)
+        .values({
+          email,
+          name,
+          permissions: {}, // default permissions
+        })
+        .returning()
+    )[0];
+
+  if (!user) throw new Error("User creation failed");
+
+  // Omit sensitive fields safely
+  const safeUser: SafeUser = structuredClone(user);
+  return safeUser;
 }

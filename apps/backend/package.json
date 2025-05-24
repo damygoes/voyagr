@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
     "start": "node --loader ts-node/esm src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "drizzle:push": "drizzle-kit push --config=drizzle.config.ts"
   },
   "author": "",
   "license": "ISC",
@@ -39,5 +40,8 @@
     "nodemon": "^3.1.9",
     "tsx": "^4.19.4",
     "typescript": "^5.7.2"
+  },
+  "exports": {
+    "./db": "./src/db/schema.ts"
   }
 }
