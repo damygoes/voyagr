@@ -65,20 +65,20 @@ const LoginPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-</div>
+        </div>
         <div>
-           <label htmlFor="password" className="block text-sm">
-             Password
-           </label>
-           <input
-             id="password"
-             type="password"
-             required
-             className="w-full p-2 border border-gray-300 rounded-md"
-             value={password}
-             onChange={(e) => setPassword(e.target.value)}
-           />
-         </div>
+          <label htmlFor="password" className="block text-sm">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            required
+            className="w-full p-2 border border-gray-300 rounded-md"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
         <button
           type="submit"
           disabled={isLoading}
@@ -90,7 +90,7 @@ const LoginPage = () => {
         >
           {isLoading ? "Logging in..." : "Log In"}
         </button>
-       </form>
+      </form>
 
       <div className="my-4 text-center">
         <p>Or sign in with:</p>

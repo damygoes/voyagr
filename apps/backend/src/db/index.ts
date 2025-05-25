@@ -5,7 +5,7 @@ import * as schema from "./schema";
 
 if (!env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is required");
- }
+}
 
 const pool = new Pool({
   connectionString: env.DATABASE_URL,

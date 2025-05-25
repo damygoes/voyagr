@@ -1,3 +1,4 @@
+import { UserPermissions } from "@voyagr/types/user-permissions";
 import "next-auth";
 
 declare module "next-auth" {

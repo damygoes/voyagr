@@ -3,7 +3,7 @@ import { users } from "@/db/schema";
 import { compare, hash } from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { SafeUser } from "../users/User.types";
-import { authInputValidator } from './utils/authInputValidator';
+import { authInputValidator } from "./utils/authInputValidator";
 
 export interface CreateUserResult {
   user: typeof users.$inferSelect | null;
@@ -17,8 +17,8 @@ export async function createUser(
 ): Promise<CreateUserResult> {
   // Validate inputs
   if (!authInputValidator.validateEmail(email)) {
-     return { user: null, error: "Invalid email address" };
-   }
+    return { user: null, error: "Invalid email address" };
+  }
   if (!authInputValidator.validateName(name)) {
     return { user: null, error: "Name must be at least 2 characters" };
   }
@@ -121,7 +121,7 @@ export async function manageUserFromOAuth({
   if (!user) throw new Error("User creation failed");
 
   // Omit sensitive fields safely
-   
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { hashedPassword, createdAt, updatedAt, ...safeUser } = user;
   return safeUser as SafeUser;

@@ -5,7 +5,6 @@ import Link from "next/link";
 
 const DashboardHome = () => {
   const { data: session, status } = useSession();
-  console.log("Session data:", session);
 
   if (status === "loading") return <div>Loading...</div>;
 
