@@ -4,9 +4,8 @@ import { Pool } from "pg";
 import * as schema from "./schema";
 
 if (!env.DATABASE_URL) {
-  console.error("DATABASE_URL environment variable is required");
-  process.exit(1);
-}
+  throw new Error("DATABASE_URL environment variable is required");
+ }
 
 const pool = new Pool({
   connectionString: env.DATABASE_URL,

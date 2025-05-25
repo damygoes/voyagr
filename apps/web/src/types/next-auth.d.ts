@@ -14,7 +14,7 @@ declare module "next-auth" {
     name?: string | null;
     email?: string | null;
     image?: string | null;
-    permissions: Record<string, unknown>;
+    permissions: UserPermissions;
   }
 }
 declare module "next-auth/jwt" {

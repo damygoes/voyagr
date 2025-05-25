@@ -65,34 +65,32 @@ const LoginPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-        </div>
+</div>
         <div>
-          <label htmlFor="password" className="block text-sm">
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            required
-            className="w-full p-2 border border-gray-300 rounded-md"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <div className="flex justify-between items-center">
-            <button
-              type="submit"
-              disabled={isLoading}
-              className={`px-4 py-2 rounded-md text-white ${
-                isLoading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-500 hover:bg-blue-600"
-              }`}
-            >
-              {isLoading ? "Logging in..." : "Log In"}
-            </button>
-          </div>
-        </div>
-      </form>
+           <label htmlFor="password" className="block text-sm">
+             Password
+           </label>
+           <input
+             id="password"
+             type="password"
+             required
+             className="w-full p-2 border border-gray-300 rounded-md"
+             value={password}
+             onChange={(e) => setPassword(e.target.value)}
+           />
+         </div>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className={`w-full px-4 py-2 rounded-md text-white ${
+            isLoading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-500 hover:bg-blue-600"
+          }`}
+        >
+          {isLoading ? "Logging in..." : "Log In"}
+        </button>
+       </form>
 
       <div className="my-4 text-center">
         <p>Or sign in with:</p>

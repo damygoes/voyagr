@@ -1,9 +1,9 @@
 import { db } from "@/db";
 import { users } from "@/db/schema";
-import { validateEmail } from "@/utils/validateEmail";
 import { compare, hash } from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { SafeUser } from "../users/User.types";
+import { authInputValidator } from './utils/authInputValidator';
 
 export interface CreateUserResult {
   user: typeof users.$inferSelect | null;
@@ -16,13 +16,13 @@ export async function createUser(
   password: string,
 ): Promise<CreateUserResult> {
   // Validate inputs
-  if (!email || !email.includes("@")) {
-    return { user: null, error: "Invalid email address" };
-  }
-  if (!name || name.trim().length < 2) {
+  if (!authInputValidator.validateEmail(email)) {
+     return { user: null, error: "Invalid email address" };
+   }
+  if (!authInputValidator.validateName(name)) {
     return { user: null, error: "Name must be at least 2 characters" };
   }
-  if (!password || password.length < 8) {
+  if (!authInputValidator.validatePassword(password)) {
     return { user: null, error: "Password must be at least 8 characters" };
   }
   try {
@@ -58,7 +58,7 @@ export async function createUser(
 
 export async function findUserByEmail(email: string) {
   try {
-    if (!validateEmail(email)) {
+    if (!authInputValidator.validateEmail(email)) {
       return null;
     }
     return await db.query.users.findFirst({
@@ -121,6 +121,7 @@ export async function manageUserFromOAuth({
   if (!user) throw new Error("User creation failed");
 
   // Omit sensitive fields safely
+   
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { hashedPassword, createdAt, updatedAt, ...safeUser } = user;
   return safeUser as SafeUser;
