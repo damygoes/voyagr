@@ -10,7 +10,14 @@ const envSchema = z.object({
     .enum(["development", "test", "production"])
     .default("development"),
   NEXT_PUBLIC_API_URL: z.string().url(),
-  NEXTAUTH_URL: z.string().url().optional(),
+  NEXTAUTH_URL: z
+    .string()
+    .url()
+    .optional()
+    .refine(
+      (val) => process.env.NODE_ENV !== "production" || val !== undefined,
+      { message: "NEXTAUTH_URL is required in production" },
+    ),
   GOOGLE_CLIENT_ID: z.string().min(1, "GOOGLE_CLIENT_ID is required"),
   GOOGLE_CLIENT_SECRET: z.string().min(1, "GOOGLE_CLIENT_SECRET is required"),
   NEXTAUTH_SECRET: z
@@ -22,7 +29,14 @@ const envSchema = z.object({
 const parsedEnv = envSchema.safeParse(process.env);
 
 if (!parsedEnv.success) {
-  console.error("❌ Invalid environment variables:", parsedEnv.error.format());
+  if (process.env.NODE_ENV === "development") {
+    console.error(
+      "❌ Invalid environment variables:",
+      parsedEnv.error.format(),
+    );
+  } else {
+    console.error("❌ Invalid environment variables detected");
+  }
   process.exit(1);
 }
 

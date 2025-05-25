@@ -4,11 +4,12 @@ const validateEmail = (email: string): boolean => {
 };
 
 const validateName = (name: string): boolean => {
-  if (!name || name.trim().length < 2 || name.length > 50) {
+  const trimmedName = name.trim();
+  if (!name || trimmedName.length < 2 || trimmedName.length > 50) {
     return false;
   }
   const nameRegex = /^[a-zA-Z\s]+$/; // Allows letters and spaces
-  return nameRegex.test(name);
+  return nameRegex.test(trimmedName);
 };
 
 const validatePassword = (password: string): boolean => {

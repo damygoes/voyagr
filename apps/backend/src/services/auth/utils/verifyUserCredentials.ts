@@ -6,11 +6,13 @@ export async function verifyUserCredentials(
   password: string,
 ): Promise<SafeUser> {
   const user = await findUserByEmail(email);
-  if (
-    !user ||
-    !user.hashedPassword ||
-    !(await verifyPassword(password, user.hashedPassword))
-  ) {
+
+  // Always perform password verification to prevent timing attacks
+  const isValidPassword = user?.hashedPassword
+    ? await verifyPassword(password, user.hashedPassword)
+    : false;
+
+  if (!user || !user.hashedPassword || !isValidPassword) {
     throw new Error("Invalid credentials");
   }
 

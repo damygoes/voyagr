@@ -39,7 +39,9 @@ export function authenticateJWT(
       typeof decoded === "object" &&
       decoded !== null &&
       "id" in decoded &&
-      typeof decoded.id === "string"
+      typeof decoded.id === "string" &&
+      "email" in decoded &&
+      typeof decoded.email === "string"
     ) {
       req.user = decoded as User;
     } else {

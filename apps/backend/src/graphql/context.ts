@@ -21,8 +21,11 @@ export async function createContext({ req }: { req: Request }) {
       "id" in decoded &&
       typeof decoded.id === "string"
     ) {
-      const user = await getOrCreateUser(decoded as User);
-      return { user };
+      // Validate required fields before casting
+      if ("email" in decoded && typeof decoded.email === "string") {
+        const user = await getOrCreateUser(decoded as User);
+        return { user };
+      }
     }
   } catch (err) {
     console.warn("Invalid token in context:", err);

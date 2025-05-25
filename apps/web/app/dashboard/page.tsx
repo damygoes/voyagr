@@ -21,7 +21,7 @@ export default function DashboardPage() {
     <main className="flex flex-col items-center justify-between min-h-screen p-24 bg-background">
       <h1>Dashboard</h1>
       <p>Welcome {session?.user?.name ?? "Guest"}!</p>
-      <p>GraphQL says: {data.hello}</p>
+      <p>GraphQL says: {data?.hello ?? "No response"}</p>
       {session ? (
         <Button
           variant="destructive"

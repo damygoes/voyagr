@@ -45,7 +45,6 @@ async function start() {
   // Main GraphQL endpoint
   app.use(
     "/voyagr-api",
-    express.json(), // Required for Apollo
     authenticateJWT, // Optional middleware
     expressMiddleware(server, {
       context: async ({ req }) => createContext({ req }),
