@@ -12,7 +12,12 @@ export const authResolvers: MutationResolvers = {
     } catch (error) {
       // Log error securely without exposing details
       console.error("Login failed:", error);
-      throw new Error("Invalid credentials");
+      const message =
+        error instanceof Error && error.message
+          ? error.message
+          : "Login failed. Please try again.";
+
+      throw new Error(message);
     }
   },
 
@@ -31,7 +36,11 @@ export const authResolvers: MutationResolvers = {
       return { user, token };
     } catch (error) {
       console.error("OAuth user creation failed:", error);
-      throw new Error("Failed to process OAuth user");
+      const message =
+        error instanceof Error && error.message
+          ? error.message
+          : "Failed to create or update user. Please try again.";
+      throw new Error(message);
     }
   },
 };

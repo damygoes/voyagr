@@ -16,33 +16,24 @@ const LoginPage = () => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
-    try {
-      // Handle email/password login
-      const res = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
-      });
-      if (res?.error) {
-        // Parse error message if available
-        const errorMessage =
-          typeof res.error === "string" && res.error.length > 0
-            ? res.error
-            : "Failed to login. Please check your credentials.";
-        setError(errorMessage);
-      } else {
-        // Constants for routes
-        const DASHBOARD_ROUTE = "/dashboard";
-        router.push(DASHBOARD_ROUTE);
-      }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      // Log error securely (consider using a logging service)
-      setError("An unexpected error occurred. Please try again.");
-    } finally {
+
+    const res = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (res?.ok) {
       setIsLoading(false);
+      router.push("/dashboard"); // or wherever you want
+    } else {
+      // The only message available is from `res.error` here
+      setError(res?.error ?? "Login failed");
     }
+    setIsLoading(false);
   };
+
+  console.log("error in login page:", error);
 
   const handleGoogleLogin = () => {
     signIn("google", { callbackUrl: "/dashboard" }); // Redirect to dashboard after Google login
@@ -51,7 +42,6 @@ const LoginPage = () => {
   return (
     <div className="max-w-md mx-auto p-6 border border-solid border-border rounded-md bg-card">
       <h1 className="text-xl font-bold text-center mb-4">Login</h1>
-      {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
       <form onSubmit={handleLogin} className="space-y-4">
         <div>
           <label htmlFor="email" className="block text-sm">
@@ -79,7 +69,8 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button
+        {error && <div className="text-destructive text-sm my-3">{error}</div>}
+        <Button
           type="submit"
           disabled={isLoading}
           className={`w-full px-4 py-2 rounded-md text-white ${
@@ -89,7 +80,7 @@ const LoginPage = () => {
           }`}
         >
           {isLoading ? "Logging in..." : "Log In"}
-        </button>
+        </Button>
       </form>
 
       <div className="my-4 text-center">

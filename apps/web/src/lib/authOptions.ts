@@ -45,7 +45,12 @@ export const authOptions: NextAuthOptions = {
           const { data, errors } = await res.json();
 
           if (errors || !data?.login?.user?.id) {
-            throw new Error(errors?.[0]?.message || "Login failed");
+            const errorMessage =
+              Array.isArray(errors) && errors.length > 0
+                ? (errors[0].message ?? JSON.stringify(errors[0]))
+                : "Login failed. Please try again.";
+
+            throw new Error(errorMessage);
           }
 
           return {
@@ -56,8 +61,11 @@ export const authOptions: NextAuthOptions = {
             token: data.login.token,
           };
         } catch (error) {
-          console.error("Authentication error:", error);
-          return null;
+          throw new Error(
+            error instanceof Error
+              ? error.message
+              : "An unexpected error occurred",
+          );
         }
       },
     }),
@@ -72,15 +80,21 @@ export const authOptions: NextAuthOptions = {
       if (user?.id) {
         token.id = user.id;
         token.accessToken = user.token; // token returned from login/upsertOAuthUser
+        token.email = user.email;
+        token.name = user.name;
+        token.permissions = user.permissions;
       }
+
       return token;
     },
 
     async session({ session, token }) {
       if (session.user && token?.id) {
         session.user.id = token.id;
-
+        session.user.email = token.email;
+        session.user.name = token.name;
         session.accessToken = token.accessToken;
+        session.user.permissions = token.permissions;
       }
       return session;
     },
