@@ -1,3 +1,5 @@
+import { ApolloWrapper } from "@/components/providers/ApolloWrapper";
+import { NextAuthSessionProvider } from "@/components/providers/NextAuthSessionProvider";
 import "@voyagr/ui/styles.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -17,7 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <NextAuthSessionProvider>
+          <ApolloWrapper>{children}</ApolloWrapper>
+        </NextAuthSessionProvider>
+      </body>
     </html>
   );
 }

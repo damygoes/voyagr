@@ -9,20 +9,13 @@ const envSchema = z.object({
   NODE_ENV: z
     .enum(["development", "test", "production"])
     .default("development"),
-  PORT: z.coerce.number().default(4000),
-  DATABASE_URL: z
+  NEXT_PUBLIC_API_URL: z.string().url(),
+  NEXTAUTH_URL: z.string().url().optional(),
+  GOOGLE_CLIENT_ID: z.string().min(1, "GOOGLE_CLIENT_ID is required"),
+  GOOGLE_CLIENT_SECRET: z.string().min(1, "GOOGLE_CLIENT_SECRET is required"),
+  NEXTAUTH_SECRET: z
     .string()
-    .refine(
-      (val) => val.startsWith("postgres://") || val.startsWith("postgresql://"),
-      {
-        message: "Invalid DATABASE_URL format",
-      },
-    ),
-  AWS_REGION: z.string(),
-  S3_BUCKET_NAME: z.string(),
-  CORS_ORIGIN: z.string().url(),
-  JWT_SECRET: z.string().min(1, "JWT_SECRET is required"),
-  NEXTAUTH_SECRET: z.string().min(1, "NEXTAUTH_SECRET is required"),
+    .min(32, "NEXTAUTH_SECRET must be at least 32 characters"),
 });
 
 // Validate process.env
