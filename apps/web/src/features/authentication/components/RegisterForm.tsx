@@ -38,16 +38,20 @@ const RegisterForm = () => {
     } catch (err) {
       const errorMessage = (err as Error).message;
 
-      try {
-        const parsed = JSON.parse(errorMessage);
-        if (Array.isArray(parsed)) {
-          setErrors(parsed); // array of validation errors
-        } else {
-          setErrors([errorMessage]);
-        }
-      } catch {
-        setErrors([errorMessage]);
-      }
+try {
+         const parsed = JSON.parse(errorMessage);
+        if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === 'string') {
+           setErrors(parsed); // array of validation errors
+        } else if (parsed.message && typeof parsed.message === 'string') {
+          setErrors([parsed.message]);
+        } else if (parsed.error && typeof parsed.error === 'string') {
+          setErrors([parsed.error]);
+         } else {
+           setErrors([errorMessage]);
+         }
+       } catch {
+         setErrors([errorMessage]);
+       }
     } finally {
       setIsLoading(false);
     }
@@ -105,17 +109,13 @@ const RegisterForm = () => {
             ))}
           </div>
         )}
-        <Button
-          type="submit"
-          disabled={isLoading}
-          className={`w-full px-4 py-2 rounded-md text-white ${
-            isLoading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-green-500 hover:bg-green-600"
-          }`}
-        >
-          {isLoading ? "Registering..." : "Register"}
-        </Button>
+<Button
+           type="submit"
+           disabled={isLoading}
+          className="w-full"
+         >
+           {isLoading ? "Registering..." : "Register"}
+         </Button>
       </form>
     </div>
   );

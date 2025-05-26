@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@voyagr/ui/Button";
+import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { loginWithCredentials } from "../api/login";
@@ -11,6 +12,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,12 +29,16 @@ const LoginForm = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    // No need to abstract this, but you could
-    import("next-auth/react").then(({ signIn }) =>
-      signIn("google", { callbackUrl: "/dashboard" }),
-    );
-  };
+  const handleGoogleLogin = async () => {
+    setIsGoogleLoading(true);
+    try {
+      await signIn("google", { callbackUrl: "/dashboard" });
+    } catch (error) {
+      console.warn("Google login failed:", error);
+      setError("Google login failed. Please try again.");
+      setIsGoogleLoading(false);
+    }
+   };
 
   return (
     <div className="max-w-md mx-auto p-6 border border-solid border-border rounded-md bg-card">
@@ -81,7 +87,7 @@ const LoginForm = () => {
       <div className="my-4 text-center">
         <p>Or sign in with:</p>
         <Button type="button" onClick={handleGoogleLogin} disabled={isLoading}>
-          {isLoading ? "Loading..." : "Google Login"}
+          {isGoogleLoading ? "Signing in..." : "Google Login"}
         </Button>
       </div>
     </div>

@@ -8,9 +8,18 @@ export async function registerUser({
   name: string;
 }) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  
+  if (!API_URL) {
+    throw new Error("API_URL is not configured");
+  }
+  
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+  
   const res = await fetch(`${API_URL}/voyagr-api`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    signal: controller.signal,
     body: JSON.stringify({
       query: `
       mutation RegisterUser($email: String!, $password: String!, $name: String!) {
@@ -28,6 +37,12 @@ export async function registerUser({
       variables: { email, password, name },
     }),
   });
+  
+  clearTimeout(timeoutId);
+  
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`);
+  }
 
   const json = await res.json();
 
@@ -35,5 +50,5 @@ export async function registerUser({
     throw new Error(json.errors[0]?.message || "Registration failed");
   }
 
-  return json.data.register; // { user, token }
+  return json.data.registerUser; // { user, token }
 }
