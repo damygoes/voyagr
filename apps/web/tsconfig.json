@@ -1,6 +1,11 @@
 {
   "extends": "@voyagr/typescript-config/nextjs.json",
   "compilerOptions": {
+    "types": ["next-auth"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "plugins": [
       {
         "name": "next"

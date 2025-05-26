@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { z } from "zod";
 
 dotenv.config({
-  path: "./.env",
+  path: "./.env.local",
 });
 
 const envSchema = z.object({
@@ -19,10 +19,12 @@ const envSchema = z.object({
       },
     ),
   AWS_REGION: z.string(),
-  COGNITO_POOL_ID: z.string(),
-  COGNITO_CLIENT_ID: z.string(),
   S3_BUCKET_NAME: z.string(),
   CORS_ORIGIN: z.string().url(),
+  JWT_SECRET: z.string().min(32, "JWT_SECRET must be at least 32 characters"),
+  NEXTAUTH_SECRET: z
+    .string()
+    .min(32, "NEXTAUTH_SECRET must be at least 32 characters"),
 });
 
 // Validate process.env
@@ -34,5 +36,3 @@ if (!parsedEnv.success) {
 }
 
 export const env = parsedEnv.data;
-
-// DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
