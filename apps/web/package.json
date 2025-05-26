@@ -16,6 +16,7 @@
     "@voyagr/types": "workspace:*",
     "@voyagr/ui": "workspace:*",
     "@voyagr/utils": "workspace:*",
+    "dotenv": "^16.4.7",
     "next": "^15.3.0",
     "next-auth": "^4.24.11",
     "react": "^19.1.0",

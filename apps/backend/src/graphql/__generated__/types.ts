@@ -37,6 +37,12 @@ export type Scalars = {
   JSON: { input: any; output: any };
 };
 
+export type AuthPayload = {
+  __typename?: "AuthPayload";
+  token: Scalars["String"]["output"];
+  user: SafeUser;
+};
+
 export type AuthResponse = {
   __typename?: "AuthResponse";
   token: Scalars["String"]["output"];
@@ -45,12 +51,19 @@ export type AuthResponse = {
 
 export type Mutation = {
   __typename?: "Mutation";
-  login: AuthResponse;
-  upsertOAuthUser: AuthResponse;
+  login: AuthPayload;
+  register: AuthPayload;
+  upsertOAuthUser: AuthPayload;
 };
 
 export type MutationLoginArgs = {
   email: Scalars["String"]["input"];
+  password: Scalars["String"]["input"];
+};
+
+export type MutationRegisterArgs = {
+  email: Scalars["String"]["input"];
+  name?: InputMaybe<Scalars["String"]["input"]>;
   password: Scalars["String"]["input"];
 };
 
@@ -62,6 +75,14 @@ export type MutationUpsertOAuthUserArgs = {
 export type Query = {
   __typename?: "Query";
   hello: Scalars["String"]["output"];
+};
+
+export type SafeUser = {
+  __typename?: "SafeUser";
+  email: Scalars["String"]["output"];
+  id: Scalars["ID"]["output"];
+  name?: Maybe<Scalars["String"]["output"]>;
+  permissions: Scalars["JSON"]["output"];
 };
 
 export type User = {
@@ -179,26 +200,40 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  AuthPayload: ResolverTypeWrapper<AuthPayload>;
   AuthResponse: ResolverTypeWrapper<AuthResponse>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]["output"]>;
   ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
   JSON: ResolverTypeWrapper<Scalars["JSON"]["output"]>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  SafeUser: ResolverTypeWrapper<SafeUser>;
   String: ResolverTypeWrapper<Scalars["String"]["output"]>;
   User: ResolverTypeWrapper<User>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  AuthPayload: AuthPayload;
   AuthResponse: AuthResponse;
   Boolean: Scalars["Boolean"]["output"];
   ID: Scalars["ID"]["output"];
   JSON: Scalars["JSON"]["output"];
   Mutation: {};
   Query: {};
+  SafeUser: SafeUser;
   String: Scalars["String"]["output"];
   User: User;
+};
+
+export type AuthPayloadResolvers<
+  ContextType = GraphQLContext,
+  ParentType extends
+    ResolversParentTypes["AuthPayload"] = ResolversParentTypes["AuthPayload"],
+> = {
+  token?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes["SafeUser"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type AuthResponseResolvers<
@@ -222,13 +257,19 @@ export type MutationResolvers<
     ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"],
 > = {
   login?: Resolver<
-    ResolversTypes["AuthResponse"],
+    ResolversTypes["AuthPayload"],
     ParentType,
     ContextType,
     RequireFields<MutationLoginArgs, "email" | "password">
   >;
+  register?: Resolver<
+    ResolversTypes["AuthPayload"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationRegisterArgs, "email" | "password">
+  >;
   upsertOAuthUser?: Resolver<
-    ResolversTypes["AuthResponse"],
+    ResolversTypes["AuthPayload"],
     ParentType,
     ContextType,
     RequireFields<MutationUpsertOAuthUserArgs, "email">
@@ -241,6 +282,18 @@ export type QueryResolvers<
     ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
 > = {
   hello?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+};
+
+export type SafeUserResolvers<
+  ContextType = GraphQLContext,
+  ParentType extends
+    ResolversParentTypes["SafeUser"] = ResolversParentTypes["SafeUser"],
+> = {
+  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  permissions?: Resolver<ResolversTypes["JSON"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserResolvers<
@@ -256,9 +309,11 @@ export type UserResolvers<
 };
 
 export type Resolvers<ContextType = GraphQLContext> = {
+  AuthPayload?: AuthPayloadResolvers<ContextType>;
   AuthResponse?: AuthResponseResolvers<ContextType>;
   JSON?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  SafeUser?: SafeUserResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };

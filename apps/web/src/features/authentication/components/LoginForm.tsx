@@ -1,11 +1,11 @@
 "use client";
 
 import { Button } from "@voyagr/ui/Button";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { loginWithCredentials } from "../api/login";
 
-const LoginPage = () => {
+const LoginForm = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,26 +17,21 @@ const LoginPage = () => {
     setError(null);
     setIsLoading(true);
 
-    const res = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
-
-    if (res?.ok) {
+    try {
+      await loginWithCredentials(email, password);
+      router.push("/dashboard");
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
       setIsLoading(false);
-      router.push("/dashboard"); // or wherever you want
-    } else {
-      // The only message available is from `res.error` here
-      setError(res?.error ?? "Login failed");
     }
-    setIsLoading(false);
   };
 
-  console.log("error in login page:", error);
-
   const handleGoogleLogin = () => {
-    signIn("google", { callbackUrl: "/dashboard" }); // Redirect to dashboard after Google login
+    // No need to abstract this, but you could
+    import("next-auth/react").then(({ signIn }) =>
+      signIn("google", { callbackUrl: "/dashboard" }),
+    );
   };
 
   return (
@@ -93,4 +88,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginForm;

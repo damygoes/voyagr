@@ -1,8 +1,9 @@
 import { db } from "@/db";
 import { users } from "@/db/db-schema";
 import { authInputValidator } from "@/services/auth/utils/authInputValidator";
-import { compare, hash } from "bcryptjs";
+import { compare } from "bcryptjs";
 import { eq } from "drizzle-orm";
+import { hashPassword } from "./utils/hashPassword";
 
 export async function createUser(
   email: string,
@@ -10,18 +11,20 @@ export async function createUser(
   password: string,
 ) {
   if (!authInputValidator.validateEmail(email)) {
-    return { user: null, error: "Invalid email address" };
+    throw new Error("Invalid email address");
   }
   if (!authInputValidator.validateName(name)) {
-    return { user: null, error: "Name must be at least 2 characters" };
+    throw new Error("Name must be at least 2 characters");
   }
-  if (!authInputValidator.validatePassword(password)) {
-    return { user: null, error: "Password must be at least 8 characters" };
+
+  const passwordErrors = authInputValidator.validatePassword(password);
+  if (passwordErrors.length > 0) {
+    throw new Error(JSON.stringify(passwordErrors));
   }
+
+  const hashedPassword = await hashPassword(password);
 
   try {
-    const hashedPassword = await hash(password, 10);
-
     const [user] = await db.transaction(async (tx) => {
       const existingUser = await tx.query.users.findFirst({
         where: eq(users.email, email),
@@ -29,6 +32,7 @@ export async function createUser(
       if (existingUser) {
         throw new Error("User with this email already exists");
       }
+
       return tx
         .insert(users)
         .values({
@@ -40,12 +44,11 @@ export async function createUser(
         .returning();
     });
 
-    return { user };
+    return user;
   } catch (error) {
-    return {
-      user: null,
-      error: error instanceof Error ? error.message : "Failed to create user",
-    };
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to create user",
+    );
   }
 }
 

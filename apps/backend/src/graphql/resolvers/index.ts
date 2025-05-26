@@ -11,5 +11,6 @@ export const resolvers = {
   Mutation: {
     login: authResolvers.login,
     upsertOAuthUser: authResolvers.upsertOAuthUser,
+    registerUser: authResolvers.register,
   },
 };

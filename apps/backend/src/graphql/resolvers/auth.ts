@@ -1,3 +1,4 @@
+import { createUser } from "@/services/auth/auth.service";
 import { findOrCreateOAuthUser } from "@/services/auth/utils/findOrCreateOAuthUser";
 import { generateToken } from "@/services/auth/utils/generateToken";
 import { verifyUserCredentials } from "@/services/auth/utils/verifyUserCredentials";
@@ -42,5 +43,18 @@ export const authResolvers: MutationResolvers = {
           : "Failed to create or update user. Please try again.";
       throw new Error(message);
     }
+  },
+
+  async register(_parent, args) {
+    const { email, password, name } = args;
+
+    if (!email || !password || !name) {
+      throw new Error("Missing required fields.");
+    }
+
+    const user = await createUser(email, name, password);
+    const token = generateToken(user);
+
+    return { user, token };
   },
 };
