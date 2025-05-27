@@ -1,4 +1,4 @@
-import { Button } from "@voyagr/ui/Button";
+import { Button } from "@voyagr/ui";
 
 export default function Page() {
   return (
