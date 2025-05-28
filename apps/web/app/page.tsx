@@ -12,7 +12,8 @@ export default function Page() {
   const formType = searchParams.get("form");
 
   useEffect(() => {
-    if (!formType) {
+    // this is to guard against possible hydration issues and infinite redirects in edge cases
+    if (!formType && typeof window !== "undefined") {
       router.replace("/?form=login");
     }
   }, [formType, router]);
@@ -25,7 +26,7 @@ export default function Page() {
     formComponent,
   } = useMemo(() => getAuthFormConfig(formType), [formType]);
 
-  if (!formType) return null;
+  if (!formType) return <div>Loading...</div>; // TODO: implement proper loading state later
 
   return (
     <AuthLayout

@@ -8,16 +8,35 @@ const meta: Meta<typeof Input> = {
   tags: ["autodocs"],
   argTypes: {
     type: {
-      control: "text",
+      control: "select",
+      options: ["text", "password", "email", "number", "tel", "url", "search"],
     },
     placeholder: {
       control: "text",
     },
     iconLeft: {
-      control: "object",
+      control: "select",
+      options: [null, "search", "mail", "lock", "user", "calendar"],
+      mapping: {
+        null: undefined,
+        search: { name: "search" },
+        mail: { name: "mail" },
+        lock: { name: "lock" },
+        user: { name: "user" },
+        calendar: { name: "calendar" },
+      },
     },
     iconRight: {
-      control: "object",
+      control: "select",
+      options: [null, "search", "mail", "lock", "user", "calendar"],
+      mapping: {
+        null: undefined,
+        search: { name: "search" },
+        mail: { name: "mail" },
+        lock: { name: "lock" },
+        user: { name: "user" },
+        calendar: { name: "calendar" },
+      },
     },
   },
 };

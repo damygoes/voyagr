@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { iconMap, IconName, iconNames } from "../../assets/utils/icon-mapping";
+import {
+  iconMap,
+  IconName,
+  iconNames,
+} from "../../../assets/utils/icon-mapping";
 import { Icon, type IconProps } from "./Icon";
 
 const meta: Meta<typeof Icon> = {
@@ -77,7 +81,7 @@ export const Sizes: Story = {
     </div>
   ),
   args: {
-    name: "edit",
+    name: "register",
     color: "currentColor",
   },
 };

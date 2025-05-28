@@ -18,16 +18,23 @@ export function AuthLayout({
 }) {
   return (
     <main className="flex flex-col md:flex-row items-center justify-between h-full w-full px-lg py-2xl md:px-xl bg-background overflow-y-auto">
-      <div className="flex-1 flex flex-col justify-center items-center gap-sm text-center max-w-lg mx-auto md:mx-0">
-        <h1 className="text-3xl font-bold">{title}</h1>
-        <p className="text-muted-foreground mt-sm">{description}</p>
+      <section
+        className="flex-1 flex flex-col justify-center items-center gap-sm text-center max-w-lg mx-auto md:mx-0"
+        aria-labelledby="auth-title"
+      >
+        <h1 id="auth-title" className="text-3xl font-bold">
+          {title}
+        </h1>
+        <p className="text-muted-foreground mt-sm" role="doc-subtitle">
+          {description}
+        </p>
 
         <div className="mt-md">
           <Button variant="link">
             <Link href={secondaryLinkHref}>{secondaryLinkText}</Link>
           </Button>
         </div>
-      </div>
+      </section>
 
       <div className="w-full md:w-2/5 h-auto md:h-full flex justify-center items-center mt-xl md:mt-0 px-md">
         {children}

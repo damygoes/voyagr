@@ -12,11 +12,12 @@ export const iconMap = {
   editProfile: Icons.UserCog,
   email: Icons.Mail,
   entry: Icons.FileText,
+  eye: Icons.Eye,
+  eyeOff: Icons.EyeOff,
   help: Icons.LifeBuoy,
   home: Icons.Home,
   image: Icons.Image,
   info: Icons.Info,
-  invisible: Icons.EyeOff,
   loading: Icons.Loader2,
   location: Icons.MapPin,
   login: Icons.LogIn,
@@ -35,7 +36,6 @@ export const iconMap = {
   upload: Icons.Upload,
   user: Icons.User,
   userGroup: Icons.Users,
-  visible: Icons.Eye,
   warning: Icons.AlertTriangle,
 } as const;
 

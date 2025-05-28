@@ -20,7 +20,9 @@ const LoginPage = () => {
       await loginWithCredentials(values.email, values.password);
       router.push("/dashboard");
     } catch (err) {
-      setError((err as Error).message);
+      setError(
+        err instanceof Error ? err.message : "An unexpected error occurred",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -30,11 +32,15 @@ const LoginPage = () => {
 
   const handleGoogleLogin = async () => {
     setIsGoogleLoading(true);
+    setError(null);
     try {
       await signIn("google", { callbackUrl: "/dashboard" });
     } catch (error) {
-      console.warn("Google login failed:", error);
-      setError("Google login failed. Please try again.");
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Google login failed. Please try again.";
+      setError(errorMessage);
     } finally {
       setIsGoogleLoading(false);
     }

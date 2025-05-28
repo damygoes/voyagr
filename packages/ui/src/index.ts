@@ -1,7 +1,7 @@
 export {
   LoginForm,
   type LoginFormValues,
-} from "./components//molecules/login-form/LoginForm";
+} from "./components/molecules/login-form/LoginForm";
 export {
   RegisterForm,
   type RegisterFormValues,

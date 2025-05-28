@@ -45,7 +45,7 @@ const config: Omit<Config, "content"> = {
       "2xl": "1.5rem", // 24px
       xl: "1.25rem", // 20px
       lg: "1.125rem", // 18px
-      base: "1rem", // 16px (rename from `md`)
+      md: "1rem", // 16px
       sm: "0.875rem", // 14px
       xs: "0.75rem", // 12px
     },

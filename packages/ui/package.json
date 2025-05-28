@@ -58,12 +58,14 @@
     "vite-plugin-svgr": "^4.3.0"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.0",
     "@voyagr/utils": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "lucide-react": "^0.511.0",
-    "react-hook-form": "^7.56.4"
+    "react-hook-form": "^7.56.4",
+    "zod": "^3.25.32"
   },
   "eslintConfig": {
     "extends": [

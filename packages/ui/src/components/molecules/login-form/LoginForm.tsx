@@ -1,7 +1,9 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, type FC } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { GoogleLogo } from "../../../assets/icons/GoogleLogo";
 import { Button } from "../../primitives/button";
 import {
@@ -36,7 +38,13 @@ export const LoginForm: FC<LoginFormProps> = ({
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+  const loginSchema = z.object({
+    email: z.string().email("Please enter a valid email address"),
+    password: z.string().min(1, "Password is required"),
+  });
+
   const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -87,8 +95,19 @@ export const LoginForm: FC<LoginFormProps> = ({
                     placeholder="••••••••"
                     {...field}
                     iconRight={{
-                      name: isPasswordVisible ? "invisible" : "visible",
+                      name: isPasswordVisible ? "eye" : "eyeOff",
                       onClick: togglePasswordVisibility,
+                      "aria-label": isPasswordVisible
+                        ? "Hide password"
+                        : "Show password",
+                      role: "button",
+                      tabIndex: 0,
+                      onKeyDown: (e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          togglePasswordVisibility();
+                        }
+                      },
                     }}
                   />
                 </FormControl>

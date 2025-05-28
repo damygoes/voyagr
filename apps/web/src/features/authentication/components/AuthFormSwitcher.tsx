@@ -2,8 +2,17 @@
 
 import LoginPage from "app/(auth)/login/page";
 import RegisterPage from "app/(auth)/register/page";
+import { JSX } from "react";
 
-export function getAuthFormConfig(formType: string | null) {
+interface AuthFormConfig {
+  title: string;
+  description: string;
+  secondaryLinkText: string;
+  secondaryLinkHref: string;
+  formComponent: JSX.Element;
+}
+
+export function getAuthFormConfig(formType: string | null): AuthFormConfig {
   if (formType === "register") {
     return {
       title: "Create Your Voyagr Account",

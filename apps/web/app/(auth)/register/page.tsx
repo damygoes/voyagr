@@ -1,6 +1,7 @@
 "use client";
 
 import { registerUser } from "@/features/authentication/api/register";
+import { parseRegisterErrorMessage } from "@/utils/parseRegisterErrorMessage";
 import { RegisterForm, RegisterFormValues } from "@voyagr/ui";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -30,26 +31,7 @@ const RegisterPage = () => {
 
       router.push("/dashboard");
     } catch (err) {
-      const errorMessage = (err as Error).message;
-
-      try {
-        const parsed = JSON.parse(errorMessage);
-        if (
-          Array.isArray(parsed) &&
-          parsed.length > 0 &&
-          typeof parsed[0] === "string"
-        ) {
-          setErrors(parsed); // array of validation errors
-        } else if (parsed.message && typeof parsed.message === "string") {
-          setErrors([parsed.message]);
-        } else if (parsed.error && typeof parsed.error === "string") {
-          setErrors([parsed.error]);
-        } else {
-          setErrors([errorMessage]);
-        }
-      } catch {
-        setErrors([errorMessage]);
-      }
+      setErrors(parseRegisterErrorMessage(err));
     } finally {
       setIsLoading(false);
     }

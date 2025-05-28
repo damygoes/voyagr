@@ -2,11 +2,15 @@ type GoogleLogoProps = {
   className?: string;
 };
 
-export const GoogleLogo = ({ className }: GoogleLogoProps) => (
+export const GoogleLogo = ({ className, ...props }: GoogleLogoProps) => (
   <svg
     viewBox="0 0 150 150"
     xmlns="http://www.w3.org/2000/svg"
     className={className}
+    role="img"
+    aria-hidden="true"
+    focusable="false"
+    {...props}
   >
     <path
       fill="#4285F4"

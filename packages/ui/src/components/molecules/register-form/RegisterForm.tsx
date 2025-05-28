@@ -1,7 +1,9 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, type FC } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "../../primitives/button";
 import {
   Form,
@@ -32,7 +34,20 @@ export const RegisterForm: FC<RegisterFormProps> = ({
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+  const registerSchema = z.object({
+    name: z.string().min(2, "Name must be at least 2 characters"),
+    email: z.string().email("Please enter a valid email address"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+        "Password must contain at least one lowercase letter, one uppercase letter, and one number",
+      ),
+  });
+
   const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -98,8 +113,19 @@ export const RegisterForm: FC<RegisterFormProps> = ({
                     placeholder="••••••••"
                     {...field}
                     iconRight={{
-                      name: isPasswordVisible ? "invisible" : "visible",
+                      name: isPasswordVisible ? "eye" : "eyeOff",
                       onClick: togglePasswordVisibility,
+                      "aria-label": isPasswordVisible
+                        ? "Hide password"
+                        : "Show password",
+                      role: "button",
+                      tabIndex: 0,
+                      onKeyDown: (e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          togglePasswordVisibility();
+                        }
+                      },
                     }}
                   />
                 </FormControl>
