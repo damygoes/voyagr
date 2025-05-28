@@ -8,14 +8,14 @@ export async function registerUser({
   name: string;
 }) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  
+
   if (!API_URL) {
     throw new Error("API_URL is not configured");
   }
-  
+
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-  
+
   const res = await fetch(`${API_URL}/voyagr-api`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -37,9 +37,9 @@ export async function registerUser({
       variables: { email, password, name },
     }),
   });
-  
+
   clearTimeout(timeoutId);
-  
+
   if (!res.ok) {
     throw new Error(`HTTP error! status: ${res.status}`);
   }

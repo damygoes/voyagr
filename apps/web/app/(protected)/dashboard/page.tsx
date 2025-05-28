@@ -1,7 +1,7 @@
 "use client";
 
 import { gql, useQuery } from "@apollo/client";
-import { Button } from "@voyagr/ui/Button";
+import { Button } from "@voyagr/ui";
 import { signOut, useSession } from "next-auth/react";
 
 const HELLO_QUERY = gql`

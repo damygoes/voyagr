@@ -7,7 +7,6 @@
   },
   "devDependencies": {
     "@voyagr/typescript-config": "workspace:*",
-    "@voyagr/design": "workspace:*",
     "tailwindcss": "^3.4.17"
   }
 }

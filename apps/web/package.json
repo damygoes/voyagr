@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
+    "@hookform/resolvers": "^5.0.1",
     "@voyagr/schema": "workspace:*",
     "@voyagr/types": "workspace:*",
     "@voyagr/ui": "workspace:*",
@@ -21,7 +22,8 @@
     "next-auth": "^4.24.11",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "zod": "^3.24.3"
+    "react-hook-form": "^7.56.4",
+    "zod": "^3.25.28"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.3.0",

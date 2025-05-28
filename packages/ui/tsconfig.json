@@ -1,5 +1,5 @@
 {
   "extends": "@voyagr/typescript-config/react-library.json",
-  "include": ["src"],
+  "include": ["src", "png.d.ts", "svgr.d.ts"],
   "exclude": ["dist", "build", "node_modules"]
 }
