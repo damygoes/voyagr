@@ -30,12 +30,17 @@ export function NavSecondary({
           {items.map((item) => {
             const isActive = pathname === item.url;
             return (
-              <Link href={item.url} passHref key={item.title}>
-                <SidebarMenuButton isActive={isActive} tooltip={item.title}>
+              <SidebarMenuButton
+                asChild
+                isActive={isActive}
+                tooltip={item.title}
+                key={item.title}
+              >
+                <Link href={item.url}>
                   {item.icon && <Icon name={item.icon} />}
                   <span>{item.title}</span>
-                </SidebarMenuButton>
-              </Link>
+                </Link>
+              </SidebarMenuButton>
             );
           })}
         </SidebarMenu>
