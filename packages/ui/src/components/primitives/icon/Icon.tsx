@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { iconMap, IconName } from "../../assets/utils/icon-mapping";
+import { iconMap, IconName } from "../../../assets/utils/icon-mapping";
 
 export type IconSize = "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "5xl";
 

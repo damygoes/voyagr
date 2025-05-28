@@ -1,5 +1,5 @@
-import { ApolloWrapper } from "@/components/providers/ApolloWrapper";
-import { NextAuthSessionProvider } from "@/components/providers/NextAuthSessionProvider";
+import { ApolloWrapper } from "@/providers/ApolloWrapper";
+import { NextAuthSessionProvider } from "@/providers/NextAuthSessionProvider";
 import "@voyagr/ui/styles.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";

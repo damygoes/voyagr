@@ -2,7 +2,7 @@
 
 import { cn } from "@voyagr/utils/cn";
 import * as React from "react";
-import { Icon, type IconProps } from "../../icon";
+import { Icon, type IconProps } from "../icon";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

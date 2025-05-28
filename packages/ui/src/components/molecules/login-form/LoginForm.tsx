@@ -2,14 +2,15 @@
 
 import { useState, type FC } from "react";
 import { useForm } from "react-hook-form";
+import { GoogleLogo } from "../../../assets/icons/GoogleLogo";
 import { Button } from "../../primitives/button";
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "../../primitives/form/Form";
 import { Input } from "../../primitives/input/Input";
 
@@ -106,8 +107,14 @@ export const LoginForm: FC<LoginFormProps> = ({
         </form>
       </Form>
 
-      <div className="my-md text-center space-y-sm">
-        <p className="text-sm text-muted-foreground">Or sign in with</p>
+      <div className="w-full flex justify-between items-center gap-sm my-md">
+        <div className="border border-solid border-border w-full" />
+        <p className="text-sm text-muted-foreground">or</p>
+        <div className="border border-solid border-border w-full" />
+      </div>
+
+      {/* Google Login Button */}
+      <div className="text-center space-y-sm">
         <Button
           variant="outline"
           className="w-full"
@@ -115,7 +122,10 @@ export const LoginForm: FC<LoginFormProps> = ({
           onClick={onGoogleLogin}
           disabled={isGoogleLoading}
         >
-          {isGoogleLoading ? "Signing in..." : "Google Login"}
+          <span className="flex items-center gap-2">
+            <GoogleLogo className="w-lg h-lg" />
+            {isGoogleLoading ? "Signing in..." : "Continue with Google"}
+          </span>
         </Button>
       </div>
     </div>

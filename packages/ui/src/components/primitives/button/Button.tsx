@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
 import { cn } from "@voyagr/utils/cn";
-import { Icon, type IconProps } from "../../icon";
+import { Icon, type IconProps } from "../icon";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-xs whitespace-nowrap rounded-md text-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
@@ -21,7 +21,7 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-sm hover:underline",
+        link: "text-primary underline-offset-md hover:underline",
       },
       size: {
         default: "h-xl px-md py-sm",
