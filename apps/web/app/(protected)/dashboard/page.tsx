@@ -1,8 +1,7 @@
 "use client";
 
 import { gql, useQuery } from "@apollo/client";
-import { Button } from "@voyagr/ui";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const HELLO_QUERY = gql`
   query {
@@ -18,18 +17,81 @@ export default function DashboardPage() {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <main className="flex flex-col items-center justify-between min-h-screen p-24 bg-background">
+    <div className="flex flex-col items-center justify-start w-full bg-background">
       <h1>Dashboard</h1>
       <p>Welcome {session?.user?.name ?? "Guest"}!</p>
       <p>GraphQL says: {data?.hello ?? "No response"}</p>
-      {session ? (
-        <Button
-          variant="destructive"
-          onClick={() => signOut({ callbackUrl: "/login" })}
-        >
-          Logout
-        </Button>
-      ) : null}
-    </main>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>LASSST TESTTTT</p>
+    </div>
   );
 }

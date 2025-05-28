@@ -43,12 +43,12 @@ export const Icon = ({
 
   return (
     <SvgIcon
-      width={width}
-      height={height}
+      width={rest.width ?? width}
+      height={rest.height ?? height}
       strokeWidth={strokeWidth}
-      stroke={color}
-      fill="none"
       className={className}
+      fill="none"
+      stroke={color || undefined}
       {...rest}
     />
   );

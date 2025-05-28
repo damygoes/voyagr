@@ -17,7 +17,7 @@ export function AuthLayout({
   secondaryLinkHref: string;
 }) {
   return (
-    <main className="flex flex-col md:flex-row items-center justify-between h-full w-full px-lg py-2xl md:px-xl bg-background overflow-y-auto">
+    <main className="flex flex-col md:flex-row items-center justify-between h-screen w-full px-lg py-2xl md:px-xl bg-background">
       <section
         className="flex-1 flex flex-col justify-center items-center gap-sm text-center max-w-lg mx-auto md:mx-0"
         aria-labelledby="auth-title"
