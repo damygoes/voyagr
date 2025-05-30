@@ -1,9 +1,12 @@
 "use client";
+
+import { PageLayout } from "@/components/layouts/PageLayout";
+
 export default function HelpPage() {
   return (
-    <main className="flex flex-col items-center justify-between min-h-screen p-24 bg-background">
-      <h1>Help Page</h1>
-      <p>This is the help page content.</p>
-    </main>
+    <PageLayout
+      title="Help Page"
+      description="This is the help page content."
+    />
   );
 }

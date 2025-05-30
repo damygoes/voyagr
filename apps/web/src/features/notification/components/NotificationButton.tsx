@@ -19,6 +19,7 @@ export function NotificationButton({
       variant="outline"
       size="sm"
       onClick={onClick}
+      aria-label={`Notifications${count > 0 ? ` (${count} unread)` : ""}`}
     >
       Notifications
       <CountIndicator count={count} />

@@ -54,11 +54,11 @@ export function NavUserMenuContent({ user }: NavUserProps) {
       align="end"
       sideOffset={4}
     >
-      {menuSections.map((section, idx) => {
+      {menuSections.map((section) => {
         if (section.type === "label") {
           return (
             <DropdownMenuLabel
-              key={`label-${idx}`}
+              key={`label-${section}`}
               className="p-[0px] font-normal"
             >
               {section.content}
@@ -68,12 +68,12 @@ export function NavUserMenuContent({ user }: NavUserProps) {
 
         if (section.type === "group") {
           return (
-            <React.Fragment key={`group-${idx}`}>
+            <React.Fragment key={`group-${section}`}>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                {section.items.map((item, i) => (
+                {section.items.map((item) => (
                   <DropdownMenuItem
-                    key={i}
+                    key={`${item.label}-${item.url}`}
                     onClick={
                       item.url ? () => handleItemClick(item.url) : undefined
                     }

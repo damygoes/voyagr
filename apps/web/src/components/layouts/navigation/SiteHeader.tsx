@@ -9,12 +9,15 @@ export function SiteHeader() {
   const pathname = usePathname();
 
   const pageTitle = useMemo(() => {
-    if (!pathname) return;
+    if (!pathname) return "Untitled";
     const segments = pathname.split("/").filter(Boolean);
-    const lastSegment = segments[segments.length - 1] || "Documents";
-    return decodeURIComponent(
-      lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1),
-    );
+    const lastSegment = segments[segments.length - 1] || "Untitled";
+    try {
+      const decoded = decodeURIComponent(lastSegment);
+      return decoded.charAt(0).toUpperCase() + decoded.slice(1);
+    } catch {
+      return lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);
+    }
   }, [pathname]);
 
   return (
