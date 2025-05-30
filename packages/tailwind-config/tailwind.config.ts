@@ -36,6 +36,8 @@ const config: Omit<Config, "content"> = {
       "sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
       "sidebar-border": "var(--sidebar-border)",
       "sidebar-ring": "var(--sidebar-ring)",
+      white: "var(--white)",
+      black: "var(--black)",
     },
     fontSize: {
       "6xl": "4.313rem", // 69px,
