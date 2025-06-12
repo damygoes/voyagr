@@ -1,22 +1,23 @@
 "use client";
 
 import { getAuthFormConfig } from "@/features/authentication/components/AuthFormSwitcher";
-import { AuthLayout } from "@/features/authentication/components/AuthLayout";
-import { useRouter, useSearchParams } from "next/navigation";
+import { LandingPageLayout } from "@/features/authentication/components/LandingPageLayout";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
 
 export default function Page() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "en";
 
   const formType = searchParams.get("form");
 
   useEffect(() => {
-    // this is to guard against possible hydration issues and infinite redirects in edge cases
     if (!formType && typeof window !== "undefined") {
-      router.replace("/?form=login");
+      router.replace(`/${locale}?form=login`);
     }
-  }, [formType, router]);
+  }, [formType, router, locale]);
 
   const {
     title,
@@ -29,13 +30,13 @@ export default function Page() {
   if (!formType) return <div>Loading...</div>; // TODO: implement proper loading state later
 
   return (
-    <AuthLayout
+    <LandingPageLayout
       title={title}
       description={description}
       secondaryLinkText={secondaryLinkText}
       secondaryLinkHref={secondaryLinkHref}
     >
       {formComponent}
-    </AuthLayout>
+    </LandingPageLayout>
   );
 }

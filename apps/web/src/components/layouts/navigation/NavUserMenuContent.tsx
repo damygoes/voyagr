@@ -1,5 +1,6 @@
 "use client";
 
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { LogoutButton } from "@/features/authentication/components/LogoutButton";
 import {
   DropdownMenuContent,
@@ -11,6 +12,7 @@ import {
   Separator,
   useSidebar,
 } from "@voyagr/ui";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { appRoutes } from "./constants";
@@ -24,6 +26,7 @@ type NavUserProps = {
 export function NavUserMenuContent({ user }: NavUserProps) {
   const { isMobile } = useSidebar();
   const router = useRouter();
+  const t = useTranslations("Navigation");
 
   const handleItemClick = (url: string) => {
     router.push(url);
@@ -41,8 +44,8 @@ export function NavUserMenuContent({ user }: NavUserProps) {
     {
       type: "group",
       items: [
-        { icon: "user", label: "Account", url: appRoutes.account },
-        { icon: "billing", label: "Billing", url: appRoutes.billing },
+        { icon: "user", label: `${t("profile")}`, url: appRoutes.account },
+        { icon: "billing", label: `${t("billing")}`, url: appRoutes.billing },
       ],
     },
   ] as const;
@@ -89,6 +92,8 @@ export function NavUserMenuContent({ user }: NavUserProps) {
 
         return null;
       })}
+      <Separator className="my-sm" />
+      <LanguageSwitcher />
       <Separator className="my-sm" />
       <LogoutButton />
     </DropdownMenuContent>

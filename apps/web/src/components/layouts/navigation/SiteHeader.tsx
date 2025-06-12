@@ -2,11 +2,13 @@
 
 import { NotificationButton } from "@/features/notification/components/NotificationButton";
 import { Separator, SidebarTrigger } from "@voyagr/ui";
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const t = useTranslations("Navigation");
 
   const pageTitle = useMemo(() => {
     if (!pathname) return "Untitled";
@@ -14,11 +16,13 @@ export function SiteHeader() {
     const lastSegment = segments[segments.length - 1] || "Untitled";
     try {
       const decoded = decodeURIComponent(lastSegment);
-      return decoded.charAt(0).toUpperCase() + decoded.slice(1);
+      const title = decoded.charAt(0) + decoded.slice(1);
+      const translatedTitle = t(`${title}`) || title;
+      return translatedTitle;
     } catch {
       return lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);
     }
-  }, [pathname]);
+  }, [pathname, t]);
 
   return (
     <header className="sticky group-has-data-[collapsible=icon]/sidebar-wrapper:h-xl flex h-xl shrink-0 items-center gap-sm pr-sm py-lg border-solid border-b border-border transition-[width,height] ease-linear">

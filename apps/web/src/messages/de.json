@@ -1,0 +1,18 @@
+{
+  "Navigation": {
+    "dashboard": "Übersicht",
+    "entries": "Einträge",
+    "map": "Karte",
+    "sharedResources": "Geteilte Ressourcen",
+    "settings": "Einstellungen",
+    "getHelp": "Hilfe",
+    "feedback": "Feedback",
+    "profile": "Profil",
+    "billing": "Abrechnung",
+    "logout": "Abmelden"
+  },
+    "Dashboard": {
+    "title": "Dashboard",
+    "welcome": "Willkommen auf deinem Dashboard!"
+  }
+}

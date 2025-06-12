@@ -17,39 +17,39 @@ export const appRouteNames = Object.keys(appRoutes) as (keyof AppRoutes)[];
 export const appSidebarData = {
   navMain: [
     {
-      title: "Dashboard",
+      title: "dashboard",
       url: appRoutes.dashboard,
       icon: "dashboard" as const,
     },
     {
-      title: "Entries",
+      title: "entries",
       url: appRoutes.entries,
       icon: "entries" as const,
     },
     {
-      title: "Map",
+      title: "map",
       url: appRoutes.map,
       icon: "map" as const,
     },
     {
-      title: "Shared Resources",
+      title: "sharedResources",
       url: appRoutes.sharedResources,
       icon: "share" as const,
     },
   ],
   navSecondary: [
     {
-      title: "Settings",
+      title: "settings",
       url: appRoutes.settings,
       icon: "settings" as const,
     },
     {
-      title: "Get Help",
+      title: "getHelp",
       url: appRoutes.getHelp,
       icon: "help" as const,
     },
     {
-      title: "Feedback",
+      title: "feedback",
       url: appRoutes.feedback,
       icon: "feedback" as const,
     },
