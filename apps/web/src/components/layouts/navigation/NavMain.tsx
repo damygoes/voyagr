@@ -1,6 +1,7 @@
 "use client";
 
 import { QuickEntryCreationButton } from "@/features/entry/components/QuickEntryCreationButton";
+import { getLocalizedPath } from "@/utils/getLocalizedPath";
 import {
   Icon,
   SidebarGroup,
@@ -8,6 +9,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
 } from "@voyagr/ui";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavItems } from "./types";
@@ -18,6 +20,8 @@ interface NavMainProps {
 
 export function NavMain({ items }: NavMainProps) {
   const pathname = usePathname();
+  const locale = useLocale();
+  const t = useTranslations("Navigation");
 
   return (
     <SidebarGroup>
@@ -25,12 +29,13 @@ export function NavMain({ items }: NavMainProps) {
         <QuickEntryCreationButton />
         <SidebarMenu>
           {items.map((item) => {
-            const isActive = pathname === item.url;
+            const localizedHref = getLocalizedPath(item.url, locale);
+            const isActive = pathname === localizedHref;
             return (
-              <Link href={item.url} passHref key={item.title}>
+              <Link href={localizedHref} passHref key={item.title}>
                 <SidebarMenuButton isActive={isActive} tooltip={item.title}>
                   {item.icon && <Icon name={item.icon} />}
-                  <span>{item.title}</span>
+                  <span>{t(item.title)}</span>
                 </SidebarMenuButton>
               </Link>
             );

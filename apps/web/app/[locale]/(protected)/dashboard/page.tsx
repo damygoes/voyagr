@@ -2,6 +2,7 @@
 
 import { gql, useQuery } from "@apollo/client";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 
 const HELLO_QUERY = gql`
   query {
@@ -10,6 +11,7 @@ const HELLO_QUERY = gql`
 `;
 
 export default function DashboardPage() {
+  const t = useTranslations("Dashboard");
   const { data: session, status } = useSession();
   const { data, loading, error } = useQuery(HELLO_QUERY);
 
@@ -21,6 +23,7 @@ export default function DashboardPage() {
       <h1>Dashboard</h1>
       <p>Welcome {session?.user?.name ?? "Guest"}!</p>
       <p>GraphQL says: {data?.hello ?? "No response"}</p>
+      <p>{t("welcome", { name: session?.user?.name ?? "Guest" })}</p>
     </div>
   );
 }

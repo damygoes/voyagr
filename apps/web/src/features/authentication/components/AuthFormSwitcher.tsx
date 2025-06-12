@@ -1,7 +1,7 @@
 "use client";
 
-import LoginPage from "app/(auth)/login/page";
-import RegisterPage from "app/(auth)/register/page";
+import LoginPage from "app/[locale]/(auth)/login/page";
+import RegisterPage from "app/[locale]/(auth)/register/page";
 import { JSX } from "react";
 
 interface AuthFormConfig {

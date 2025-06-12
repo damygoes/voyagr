@@ -1,5 +1,6 @@
 "use client";
 
+import { getLocalizedPath } from "@/utils/getLocalizedPath";
 import {
   Icon,
   SidebarGroup,
@@ -7,6 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
 } from "@voyagr/ui";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
@@ -23,12 +25,16 @@ export function NavSecondary({
     typeof SidebarGroup
   >) {
   const pathname = usePathname();
+  const locale = useLocale();
+  const t = useTranslations("Navigation");
+
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => {
-            const isActive = pathname === item.url;
+            const localizedHref = getLocalizedPath(item.url, locale);
+            const isActive = pathname === localizedHref;
             return (
               <SidebarMenuButton
                 asChild
@@ -36,9 +42,9 @@ export function NavSecondary({
                 tooltip={item.title}
                 key={item.title}
               >
-                <Link href={item.url}>
+                <Link href={localizedHref}>
                   {item.icon && <Icon name={item.icon} />}
-                  <span>{item.title}</span>
+                  <span>{t(item.title)}</span>
                 </Link>
               </SidebarMenuButton>
             );

@@ -3,7 +3,7 @@
 import { Button } from "@voyagr/ui";
 import Link from "next/link";
 
-export function AuthLayout({
+export function LandingPageLayout({
   children,
   title,
   description,
